@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WHO AM I</title>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+
+    #hero {
+        background-color: lightgray;
+        height: 100vh;
+        position: relative;
+
+    }
+
+    .hero-content {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .hero-content img {
+        height: 200px;
+        width: 200px;
+        border-radius: 50%;
+        margin: auto;
+        display: block;
+        padding-bottom: 10px;
+
+    }
+</style>
+
+<body>
+
+    <section id="hero">
+        <div class="hero-content">
+            <img src="" alt="" id="user-avatar">
+            <h1>Hey, This is <span id="name"></span> </h1>
+        </div>
+    </section>
+</body>
+<script>
+
+
+
+    function whoAmI() {
+        fetch('https://randomuser.me/api/')
+            .then(res => res.json())
+            .then(data => {
+                const user = data.results[0];
+                const name = user.name;
+                const userName = `${name.title} ${name.first} ${name.last}`;
+                const picture = data.results[0].picture;
+                const picURL = picture.large;
+                document.getElementById('name').innerHTML = userName;
+                const userAvatar = document.getElementById('user-avatar');
+                userAvatar.src = `${picURL}`;
+
+            })
+    }
+    whoAmI();
+    setInterval(() => {
+        whoAmI();
+    }, 10000);
+
+</script>
+
+</html>
